@@ -1,0 +1,2 @@
+Handling Unpayable Change (e.g., 137 piastres)
+Because our smallest coin is 25 piastres, exact change is sometimes mathematically impossible. My program uses integer division to hand back as many large coins as possible. Whatever remainder is left over (like 12 piastres out of a 137 piastre change) is swallowed by the system. The cashier prints a polite note informing the user that the shop keeps the remaining balance because there are no coins small enough to refund it.
