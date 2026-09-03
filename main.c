@@ -8,9 +8,9 @@
 
 typedef struct {
     char     name[NAME_LEN];
-    uint16_t price;      /* piastres */
-    uint16_t stock;      /* how many are left on the shelf */
-    uint16_t sold;       /* how many we sold today         */
+    uint16_t price;      
+    uint16_t stock;     
+    uint16_t sold;      
 } Candy_t;
 
 typedef struct {
@@ -22,8 +22,6 @@ static Candy_t shelf[CANDY_KINDS];
 static Line_t  basket[BASKET_MAX];
 static uint8_t basketLines;      
 static uint32_t cashDrawer;
-
-/* Safe input helper */
 static int readInt(int *out) {
     char buf[64];
     if (fgets(buf, sizeof(buf), stdin) == NULL) return 0;
@@ -80,7 +78,6 @@ static void addToBasket(void) {
         return;
     }
 
-    /* Check if we already have it in the basket to add up quantities */
     int foundIndex = -1;
     for (uint8_t i = 0; i < basketLines; i++) {
         if (basket[i].candyId == (uint8_t)id) {
@@ -123,8 +120,6 @@ static void removeFromBasket(void) {
         printf("Invalid line number.\n");
         return;
     }
-
-    /* Slide everything up to fill the gap */
     for (uint8_t i = (uint8_t)line; i < basketLines - 1; i++) {
         basket[i] = basket[i + 1];
     }
@@ -175,7 +170,6 @@ static void giveChange(uint32_t change) {
         }
     }
 
-    /* What happens if we owe 137 pt and the smallest coin is 25? */
     if (change > 0) {
         printf("  ...and shop keeps %lu pt (We don't have coins smaller than 25 pt!)\n", (unsigned long)change);
     }
@@ -202,7 +196,6 @@ static void checkout(void) {
         return;
     }
 
-    /* Process the sale */
     for (uint8_t i = 0; i < basketLines; i++) {
         uint8_t id = basket[i].candyId;
         shelf[id].stock -= basket[i].qty;
@@ -215,7 +208,6 @@ static void checkout(void) {
     printf("\nPayment successful!\n");
     giveChange(change);
     
-    /* Empty the basket */
     basketLines = 0;
 }
 
